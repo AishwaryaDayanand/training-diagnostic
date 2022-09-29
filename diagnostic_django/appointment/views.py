@@ -32,6 +32,7 @@ class AppointmentBooking(APIView):
         data['user'] = customer.customer_id
         print(data)
         apmt = AppointmentSerializer( data = data )
+        print(apmt)
         if apmt.is_valid():
             apmt.save()
             return Response({"message":"appointment_booked"} , status = 200 )

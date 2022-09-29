@@ -18,10 +18,19 @@ export class CustomerBookingComponent implements OnInit {
     slot: new FormControl(" ", Validators.required),
 
   })
+  
+
   ngOnInit(): void {
     this.httpUser.getBranches().subscribe(data => {
       this.branches = data
       console.log(this.branches)
+    })
+  }
+  bookAppointment(){
+    console.log(this.bookAppointmentForm.value);
+    this.http.bookAppointment({ 'form': this.bookAppointmentForm.value, 'username': this.httpUser.getData('username') }).subscribe(data => {
+      console.log(data);
+
     })
   }
 

@@ -26,6 +26,7 @@ export class BookappointmentComponent implements OnInit {
 
   bookAppointmentForm: FormGroup = new FormGroup({
     
+    username: new FormControl(" ", Validators.required),
     doctor_id: new FormControl(" ", Validators.required),
     branch: new FormControl(null , Validators.required),
     nurse_id: new FormControl(" ", Validators.required),
@@ -33,7 +34,6 @@ export class BookappointmentComponent implements OnInit {
     sample_collector: new FormControl(" ", Validators.required),
     status: new FormControl(" ", Validators.required),
     slot: new FormControl(" ", Validators.required),
-    
   })
     
   ngOnInit(): any {
@@ -63,7 +63,7 @@ export class BookappointmentComponent implements OnInit {
 
   bookAppointment(){
     console.log(this.bookAppointmentForm.value);
-    this.http.bookAppointment({'form':this.bookAppointmentForm.value , 'username': this.httpUser.getData('username')}).subscribe(data=>{
+    this.http.bookAppointment({ 'form': this.bookAppointmentForm.value, 'username': this.bookAppointmentForm.get('username')?.value }).subscribe(data=>{
       console.log(data);
       
     })
