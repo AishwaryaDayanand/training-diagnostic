@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpServiceService } from '../../http-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-customer',
@@ -10,7 +11,8 @@ import { HttpServiceService } from '../../http-service.service';
 export class RegisterCustomerComponent implements OnInit {
   formNotValid : boolean = false
   formError ?: string =""
-  constructor(private http: HttpServiceService) { }
+  errorMessage : string = ""
+  constructor(private http: HttpServiceService, private router: Router) { }
 
   customerRegisterForm: FormGroup = new FormGroup({
     username : new FormControl(" ", Validators.required),
@@ -21,14 +23,20 @@ export class RegisterCustomerComponent implements OnInit {
     age: new FormControl(" ", Validators.required),
     address: new FormControl(" "),
     pincode: new FormControl(" ", Validators.maxLength(6)),
-    password: new FormControl(" ", Validators.minLength(8))
+    password: new FormControl(" ", Validators.minLength(8)),
+    // password1: new FormControl(" ", Validators.minLength(8))
   })
   ngOnInit(): void {
+    
   }
   submitRegister() {
     // console.log(this.customerRegisterForm.value);
     if (this.customerRegisterForm.valid) {
-      this.http.registerCustomer(this.customerRegisterForm.value).subscribe(data => console.log(data))
+      this.http.registerCustomer(this.customerRegisterForm.value).subscribe(data =>{
+        this.errorMessage = data.message
+        if (this.errorMessage == "registered") {
+          this.router.navigate(['users/login'])
+      }})
     }
     else {
       console.log('fill properly ');

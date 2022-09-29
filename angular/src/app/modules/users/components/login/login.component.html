@@ -1,9 +1,9 @@
 <p>login works!</p>
-
 <form [formGroup]="loginForm" class="form-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Register</mat-card-title>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Login</mat-card-title>
+            {{errorMessage}}
       <mat-card-title *ngIf="formNotValid"
         >please Fill All required details</mat-card-title
       >
