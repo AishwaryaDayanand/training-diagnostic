@@ -24,9 +24,10 @@ export class BookappointmentComponent implements OnInit {
   constructor(private http : CustomerServiceService, private router: Router,
     private httpUser : HttpServiceService) { }
 
+    x:string=''
   bookAppointmentForm: FormGroup = new FormGroup({
     
-    username: new FormControl(" ", Validators.required),
+    username: new FormControl(this.x||'', Validators.required),
     doctor_id: new FormControl(" ", Validators.required),
     branch: new FormControl(null , Validators.required),
     nurse_id: new FormControl(" ", Validators.required),

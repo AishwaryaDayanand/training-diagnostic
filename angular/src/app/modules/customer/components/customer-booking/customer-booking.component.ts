@@ -11,14 +11,15 @@ import { CustomerServiceService } from '../../customer-service.service';
 export class CustomerBookingComponent implements OnInit {
   slots: string[] = ['10 AM', "1 PM", '4 PM']
   branches: any
+
   constructor(private http: CustomerServiceService, private router: Router, private httpUser: HttpServiceService) { }
   bookAppointmentForm: FormGroup = new FormGroup({
-    
-    branch: new FormControl(null, Validators.required),
+
+    branch: new FormControl("", Validators.required),
     slot: new FormControl(" ", Validators.required),
 
   })
-  
+
 
   ngOnInit(): void {
     this.httpUser.getBranches().subscribe(data => {
@@ -26,7 +27,7 @@ export class CustomerBookingComponent implements OnInit {
       console.log(this.branches)
     })
   }
-  bookAppointment(){
+  bookAppointment() {
     console.log(this.bookAppointmentForm.value);
     this.http.bookAppointment({ 'form': this.bookAppointmentForm.value, 'username': this.httpUser.getData('username') }).subscribe(data => {
       console.log(data);

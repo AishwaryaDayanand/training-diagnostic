@@ -5,6 +5,8 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DisplayAppointmentsComponent } from './components/display-appointments/display-appointments.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
+// material
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MatTableModule
   ]
 })
 export class AdminModule { }
