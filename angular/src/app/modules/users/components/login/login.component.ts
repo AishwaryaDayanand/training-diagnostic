@@ -24,21 +24,22 @@ export class LoginComponent implements OnInit {
   }
   submitLogin() {
     if (this.loginForm.valid) {
-      this.http.loginUser(this.loginForm.value).subscribe(resp => {
-        console.log(resp)
-        this.errorMessage = resp.msg
-        if(this.errorMessage == "logged in"){
-          this.http.saveData("username",resp.user)
-          // console.log(this.http.getData('username'));
-          
-          this.router.navigate(['users/register-customer'])
-        }
-      },
-        err => {
+      this.http.loginUser(this.loginForm.value).subscribe({
+        next: (resp) => {
+          console.log(resp)
+          this.errorMessage = resp.msg
+          if (this.errorMessage == "logged in") {
+            this.http.saveData("username", resp.user)
+            // console.log(this.http.getData('username'));
+            localStorage.setItem('user', JSON.stringify(resp.user))
+            this.router.navigate(['users/register-customer'])
+          }
+        },
+        error: (err) => {
           console.log(err.data);
           this.handleError(err.message)
         }
-      )
+      })
     }
     else {
       console.log('fill properly ');
