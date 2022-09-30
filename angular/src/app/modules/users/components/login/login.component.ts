@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpServiceService } from '../../http-service.service';
-import { retry, catchError } from 'rxjs/operators'
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  formNotValid: boolean = false
-  errorMessage : string = ''
+export class LoginComponent  {
+  formNotValid= false
+  errorMessage = ''
   constructor(private http: HttpServiceService,
     private router : Router) { }
 
@@ -18,28 +17,28 @@ export class LoginComponent implements OnInit {
     username: new FormControl('', Validators.required),
     password: new FormControl("", Validators.required)
   })
-  handleError(err: any) {
-    // alert(err)
+  handleError(err:string) {
+    alert(err)
 
   }
   submitLogin() {
     if (this.loginForm.valid) {
-      this.http.loginUser(this.loginForm.value).subscribe({
-        next: (resp) => {
-          console.log(resp)
-          this.errorMessage = resp.msg
-          if (this.errorMessage == "logged in") {
-            this.http.saveData("username", resp.user)
-            // console.log(this.http.getData('username'));
-            localStorage.setItem('user', JSON.stringify(resp.user))
-            this.router.navigate(['users/register-customer'])
+        this.http.loginUser(this.loginForm.value).subscribe({
+          next: (resp) => {
+            console.log(resp)
+            this.errorMessage = resp.msg
+            if (this.errorMessage == "logged in") {
+              this.http.saveData("username", resp.user)
+              // console.log(this.http.getData('username'));
+              localStorage.setItem('user', JSON.stringify(resp.user))
+              this.router.navigate([''])
+            }
+          },
+          error: (err) => {
+            console.log(err.data);
+            this.handleError(err.message)
           }
-        },
-        error: (err) => {
-          console.log(err.data);
-          this.handleError(err.message)
-        }
-      })
+        })
     }
     else {
       console.log('fill properly ');
@@ -49,7 +48,5 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  }
 
 }
